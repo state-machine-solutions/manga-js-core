@@ -1,6 +1,6 @@
 # Manga.js Core
 
-![donation qrcode image](https://github.com/state-machine-solutions/manga-js-core/blob/main/manga_logo.svg?raw=true)
+![manga.js logo](https://github.com/state-machine-solutions/State-Machine-Solutions-Documentation/blob/main/manga_logo.png?raw=true)
 
 The purpose of this project is to keep organized data and be able to add listeners in certain paths, in addition to providing a possible form of message that can be stored in memory.
 
@@ -11,9 +11,9 @@ npm i --save manga-js-core
 
 ```
 
-If this project helps you, please donate
-
 ### Donate:
+
+If this project helps you, please donate
 
 https://www.paypal.com/donate/?hosted_button_id=TX922XCPET8QG
 
