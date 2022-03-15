@@ -1,0 +1,36 @@
+{
+  "name": "manga-js-core",
+  "version": "1.0.0",
+  "description": "Core of Manga JS Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/state-machine-solutions/manga-js-core.git"
+  },
+  "keywords": [
+    "sms",
+    "state",
+    "machine",
+    "event",
+    "server",
+    "manga",
+    "core",
+    "sms",
+    "core"
+  ],
+  "author": "Renato Miawaki and Alan Lucian",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/state-machine-solutions/manga-js-core/issues"
+  },
+  "homepage": "https://github.com/state-machine-solutions/manga-js-core#readme",
+  "dependencies": {
+    "deep-object-diff": "^1.1.7",
+    "object-merge": "^2.5.1",
+    "object-merge-advanced": "12.1.0",
+    "signals": "^1.0.0"
+  }
+}
