@@ -1,5 +1,5 @@
 {
-  "name": "manga-js-core",
+  "name": "@state-machine-solutions/manga-js-core",
   "version": "1.0.0",
   "description": "Core of Manga JS Server",
   "main": "index.js",

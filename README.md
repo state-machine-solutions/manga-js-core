@@ -1,5 +1,7 @@
 # Manga.js Core
 
+![donation qrcode image](https://github.com/state-machine-solutions/manga-js-core/blob/main/manga_logo.svg?raw=true)
+
 The purpose of this project is to keep organized data and be able to add listeners in certain paths, in addition to providing a possible form of message that can be stored in memory.
 
 ## Instalation
