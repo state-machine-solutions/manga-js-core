@@ -2,7 +2,8 @@ const Signal = require('signals') ;
 const DataController = require('./modules/data/DataController') ;
 const PersistData = require('./modules/data/PersistData');   
 const EventDispatcher = require('./modules/listeners/EventDispatcher');
-function MangaSeed(){
+const {ListenerInfo, ListenerClient} = require('./modules/listeners/ListenerClasses')
+function MangaCore(){
     let me = this ;
     let dataController = new DataController({}) ;
     let eventDispatcher = new EventDispatcher({maxFrequence:50}) ;
@@ -260,4 +261,4 @@ function MangaSeed(){
     saveMessagesQueue();
 }
 
-module.exports = MangaSeed ;
+module.exports = {MangaCore, ListenerInfo, ListenerClient} ;
