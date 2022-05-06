@@ -1,24 +1,19 @@
 const Signal = require('signals') ;
 const DataController = require('./modules/data/DataController') ;
-const PersistData = require('./modules/data/PersistData');   
 const EventDispatcher = require('./modules/listeners/EventDispatcher');
+const MiddlewareController = require('./modules/MiddlewareController')
+
 const {ListenerInfo, ListenerClient} = require('./modules/listeners/ListenerClasses')
 function MangaCore(){
     let me = this ;
     let dataController = new DataController({}) ;
     let eventDispatcher = new EventDispatcher({maxFrequence:50}) ;
     eventDispatcher.setMethodToGetValue( dataController.get ) ;
-    let persistData = new PersistData(eventDispatcher) ;
+    
     this.onClear = new Signal() ;
 
     let queueMessages2save = [] ;
-    
-    /* TODO: Fix await call
-    var last = await persistData.getLast();
-    if(last){
-        dataController.set("", last) ;
-    }
-    */
+    this.middleware = new MiddlewareController()
    let paused = false ;
    let info = {
        started: new Date(),
@@ -33,11 +28,13 @@ function MangaCore(){
        }
    };
     this.getInfo = ()=>{
+        me.middleware.dispatch()
         return info ;
     }
-
     
+    this.middle = new MiddlewareController() 
     dataController.onChange.add(( changes )=>{
+        
         for( var i in changes ){
             eventDispatcher.setChange( changes[i].path, changes[i].value);    
         }

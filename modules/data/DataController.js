@@ -9,7 +9,6 @@ function DataController(config) {
     var holder = new DataHolder();
     var binder = new DataBind(holder);
     this.onChange = new Signal();
-    var validateFn
     //holder proxy
     this.clear = holder.clear;
     this.setValidate = (fn) => {

@@ -1,6 +1,6 @@
 {
   "name": "@manga-js/manga-js-core",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Core of Manga JS Server",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/state-machine-solutions/manga-js-core#readme",
   "dependencies": {
+    "@manga-js/middleware": "^1.0.0",
     "deep-object-diff": "^1.1.7",
     "object-merge": "^2.5.1",
     "object-merge-advanced": "12.1.0",

@@ -13,10 +13,10 @@ function EventDispatcher(config) {
             for (var i in listenerInfos) {
                 var info = listenerInfos[i];
                 let ioClient = info.ioClient;
-                let method = info.info.handler.method;
+                let method = info.info?.handler?.method;
 
                 ioClient.emit(method, val, (result) => {
-                    console.log("chegou");
+                    //console.log("chegou");
                 })
             }
         }
@@ -66,7 +66,7 @@ function EventDispatcher(config) {
                 info.info.listener.lastLength = currentLenth;
             }
             ioClient.emit(method, val, (result) => {
-                console.log("chegou");
+                //console.log("chegou");
             })
         }
     }
@@ -85,7 +85,7 @@ function EventDispatcher(config) {
     /**
         info:{
             "listener":{
-                "property":"scenario.weather.barometer.pressure",
+                "property":"x.y.z",
                 "updateMode":"onChange|onSet|onInterval|onChangeLength",
                 "frequency":1000
             },
@@ -93,7 +93,7 @@ function EventDispatcher(config) {
                 "method":"myMethod",
                 "filter":{
                 "mode":"full|changed",
-                "data":"scenario.weather"
+                "data":"x.y"
                 }
             }
         },
