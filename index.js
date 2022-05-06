@@ -28,7 +28,6 @@ function MangaCore(){
        }
    };
     this.getInfo = ()=>{
-        me.middleware.dispatch()
         return info ;
     }
     
