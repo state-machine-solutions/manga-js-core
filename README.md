@@ -21,7 +21,7 @@ https://www.paypal.com/donate/?hosted_button_id=TX922XCPET8QG
 
 ## Usage Example
 
-```
+```js
 const {MangaCore, ListenerClient} = require('manga-js-core')
 manga = new MangaCore()
 
