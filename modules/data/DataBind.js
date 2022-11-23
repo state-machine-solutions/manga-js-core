@@ -1,5 +1,5 @@
 const smsObj = require('../utils/smsObject');
-const mergeAdvanced = require("object-merge-advanced");
+const { mergeAdvanced } = require("object-merge-advanced");
 
 const { diff, addedDiff, deletedDiff, detailedDiff, updatedDiff } = require("deep-object-diff");
 
