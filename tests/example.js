@@ -1,5 +1,5 @@
 const {MangaCore, ListenerClient} = require('../index')
-manga = new MangaCore()
+const manga = new MangaCore()
 let client1 = new ListenerClient()
 let infoClient1 = client1.getListenerInfo(
         "test.one", 

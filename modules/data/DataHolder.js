@@ -14,9 +14,9 @@ function DataHolder() {
                 return inputArg2;
             }
             if (Array.isArray(inputArg1) && Array.isArray(inputArg2)) {
-                var res = [];
-                var big = inputArg1.length > inputArg2.length ? inputArg1.length : inputArg2.length;
-                for (var i = 0; i < big; i++) {
+                const res = [];
+                const big = inputArg1.length > inputArg2.length ? inputArg1.length : inputArg2.length;
+                for (let i = 0; i < big; i++) {
 
                     if (typeof inputArg2[i] != 'undefined') {
                         if (typeof inputArg1[i] != 'undefined') {
@@ -39,6 +39,30 @@ function DataHolder() {
         return true;
     }
     this.get = async (path) => {
+        if(path){
+            //check if last value is __length
+            let pathList = path.split(".");
+            if(pathList.length > 0 && pathList[pathList.length-1] == "__length"){
+                //magic key __length get just the length if exists
+                pathList.pop();
+                path = pathList.join(".");
+                let obj = await smsObj.extract(data, path);
+                if(!obj){
+                    return 0;
+                }
+                if(Array.isArray(obj)){
+                    return obj.length;
+                }
+                if(obj.hasOwnProperty("length")){
+                    return obj.length;
+                }
+                if(typeof obj == "object"){
+                    let keys = Object.keys(obj);
+                    return keys.length;
+                }
+                return obj;
+            }
+        }
         return smsObj.extract(data, path);
     }
 
@@ -57,10 +81,8 @@ function DataHolder() {
 
     }
 
-
-
     this.set = async function (newData) {
-        var newData = mergeAdvanced(data, newData, mergeOptions);
+        const newData = mergeAdvanced(data, newData, mergeOptions);
         data = newData;
         return true;
     }

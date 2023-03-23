@@ -1,6 +1,6 @@
 {
   "name": "@manga-js/manga-js-core",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Core of Manga JS Server",
   "main": "index.js",
   "scripts": {
