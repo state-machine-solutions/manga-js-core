@@ -82,7 +82,7 @@ function DataHolder() {
     }
 
     this.set = async function (newData) {
-        const newData = mergeAdvanced(data, newData, mergeOptions);
+        newData = mergeAdvanced(data, newData, mergeOptions);
         data = newData;
         return true;
     }
