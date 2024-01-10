@@ -35,7 +35,7 @@ function MangaCore() {
 
     dataController.onChange.add((changes) => {
 
-        for (var i in changes) {
+        for (let i in changes) {
             eventDispatcher.setChange(changes[i].path, changes[i].value);
         }
         eventDispatcher.dispatchNow();
@@ -120,7 +120,7 @@ function MangaCore() {
     }
     this.setValidateFN = (fn) => {
         if (typeof fn != "function" || fn.length != 2) {
-            var err = "Validation must receive an function with 2 parameters: " +
+            const err = "Validation must receive an function with 2 parameters: " +
                 "\n\n\n(path, data)=>{" +
                 "\n  if(isValid){" +
                 "\n    return true;" +
@@ -194,8 +194,8 @@ function MangaCore() {
         }
 
         //CHECK if is repeated
-        var listenerCache = getListenerCacheByClient(listenerClient);
-        var keyByObj = getKeyStringByObj(ob);
+        const listenerCache = getListenerCacheByClient(listenerClient);
+        const keyByObj = getKeyStringByObj(ob);
         if (keyByObj == "") {
             return true;
         }
