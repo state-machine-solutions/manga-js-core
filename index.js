@@ -179,7 +179,7 @@ function MangaCore() {
 
 
         const now = new Date();
-        timeoutData.forEach((key, end) => {
+        timeoutData.forEach((end, key) => {
             if (now >= end) {
                 info.stats.garbageDeletes++;
                 me.delete(key)
