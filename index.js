@@ -183,6 +183,7 @@ function MangaCore() {
             if (now >= end) {
                 info.stats.garbageDeletes++;
                 me.delete(key)
+                timeoutData.delete(key)
             }
         })
     }
