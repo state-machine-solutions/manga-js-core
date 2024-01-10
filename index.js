@@ -76,6 +76,17 @@ function MangaCore() {
         //console.log( 'SET:', path);
         return dataController.set(path, value, validate, dispatchEvent);
     }
+
+    this.setTemporary = async (path, value, timeoutSeconds = 3600, validate = true, dispatchEvent = true) => {
+        if (paused || timeoutSeconds <= 0) {
+            return;
+        }
+        const end = new Date();
+        end.setSeconds(now.getSeconds() + timeoutSeconds);
+        timeoutData.set(path, end);
+        startCheck();
+        return me.set(path, value, validate, dispatchEvent);
+    }
     this.reset = async (path, value, validate = true, dispatchEvent = true) => {
         if (paused) {
             return;
@@ -154,6 +165,7 @@ function MangaCore() {
     function startCheck() {
         if (timeoutData.size == 0 && timeoutCheckId) {
             clearInterval(timeoutCheckId);
+            timeoutCheckId = null;
         }
         if (!timeoutCheckId) {
             timeoutCheckId = setInterval(garbageCollector, 1000)
