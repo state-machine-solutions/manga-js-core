@@ -84,7 +84,7 @@ function MangaCore() {
         const end = new Date();
         end.setSeconds(end.getSeconds() + timeoutSeconds);
         timeoutData.set(path, end);
-        startCheck();
+        startCheck(timeoutSeconds);
         return me.set(path, value, validate, dispatchEvent);
     }
     this.reset = async (path, value, validate = true, dispatchEvent = true) => {
@@ -101,7 +101,7 @@ function MangaCore() {
         const end = new Date();
         end.setSeconds(end.getSeconds() + timeoutSeconds);
         timeoutData.set(path, end);
-        startCheck();
+        startCheck(timeoutSeconds);
         return me.reset(path, value, validate, dispatchEvent);
     }
     this.message = async (path, value, save = false, reset = false) => {
@@ -162,12 +162,31 @@ function MangaCore() {
         return ob;
     }
     let timeoutCheckId = null;
-    function startCheck() {
+    let timeoutIntervalId = null
+    let earlyCheck = null
+    function startCheck(timeoutSeconds) {
         if (timeoutData.size == 0 && timeoutCheckId) {
             clearInterval(timeoutCheckId);
             timeoutCheckId = null;
         }
         if (!timeoutCheckId) {
+            if (timeoutSeconds > 3) {
+                let d = new Date()
+                d.setSeconds(d.getSeconds() + timeoutSeconds)
+                if (!earlyCheck) {
+                    earlyCheck = d;
+                    clearInterval(timeoutIntervalId)
+                    timeoutIntervalId = setTimeout(startCheck, (timeoutSeconds - 1) * 1000, 0);
+                    return
+                }
+                if (d < earlyCheck) {
+                    clearInterval(timeoutIntervalId)
+                    timeoutIntervalId = setTimeout(startCheck, (timeoutSeconds - 1) * 1000, 0);
+                    return;
+                }
+            }
+            clearInterval(timeoutIntervalId)
+            clearInterval(timeoutCheckId)
             timeoutCheckId = setInterval(garbageCollector, 1000)
         }
     }
