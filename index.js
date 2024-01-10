@@ -82,7 +82,7 @@ function MangaCore() {
             return;
         }
         const end = new Date();
-        end.setSeconds(now.getSeconds() + timeoutSeconds);
+        end.setSeconds(end.getSeconds() + timeoutSeconds);
         timeoutData.set(path, end);
         startCheck();
         return me.set(path, value, validate, dispatchEvent);
@@ -99,7 +99,7 @@ function MangaCore() {
             return;
         }
         const end = new Date();
-        end.setSeconds(now.getSeconds() + timeoutSeconds);
+        end.setSeconds(end.getSeconds() + timeoutSeconds);
         timeoutData.set(path, end);
         startCheck();
         return me.reset(path, value, validate, dispatchEvent);
