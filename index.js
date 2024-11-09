@@ -41,8 +41,7 @@ function MangaCore() {
         eventDispatcher.dispatchNow();
     });
 
-    this.create = (token) => { }
-    this.clear = (token) => {
+    this.clear = () => {
         info.stats.clear++;
         dataController.clear();
         eventDispatcher.clear();
