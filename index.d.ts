@@ -60,7 +60,7 @@ export interface ListenerHandlerInfo {
     };
   };
 }
-export interface IMangaCore {
+export class MangaCore {
   onClear: Signal;
   middleware: any;
   getInfo(): any;
@@ -122,25 +122,15 @@ export interface IMangaCore {
   removeAllListener(listenerIoClient: { id: string }): void;
 }
 
-export const MangaCore: IMangaCore;
-
-export const ListenerInfo: IListenerInfo;
-
-export const ListenerClient: IListenerClient;
-
-export interface IListenerClient {
+export class ListenerClient {
   id: number;
   callback: Map<string, Function>;
   registerListener(eventName: string, callback: Function): void;
-  getListenerInfo(
-    path: string,
-    mode: string,
-    callback: Function
-  ): IListenerInfo;
+  getListenerInfo(path: string, mode: string, callback: Function): ListenerInfo;
   emit(eventName: string, value: any, callback: Function): void;
 }
 
-export interface IListenerInfo {
+export interface ListenerInfo {
   listener: {
     path: string;
     property: string;
