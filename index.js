@@ -259,7 +259,7 @@ function MangaCore() {
             path,
             updateMode,
             (pathInfo, value) => {
-                callback(value)
+                callback(value, pathInfo)
             })
 
         subscribes.set(`${client.id}`, { infoClient, client, isMessage });

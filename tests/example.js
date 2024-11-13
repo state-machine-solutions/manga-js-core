@@ -8,8 +8,8 @@ let infoClient1 = client1.getListenerInfo(
         console.log("client1 recive event becouse value test.one was changed", value)
     })
 manga.addListener(infoClient1, client1, false)
-const { id } = manga.subscribe("test.one", (value) => {
-    console.log("subscribe callback:", value)
+const { id } = manga.subscribe("test.one", (value, path) => {
+    console.log("subscribe callback:" + path, value)
 }, false);
 setTimeout(() => {
     console.log("unsubscribe ", id)

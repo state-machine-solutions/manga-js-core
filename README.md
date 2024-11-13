@@ -21,6 +21,19 @@ https://www.paypal.com/donate/?hosted_button_id=TX922XCPET8QG
 
 ## Usage Example
 
+### Subscribe mode
+
+```
+const {MangaCore, ListenerClient} = require('manga-js-core')
+manga = new MangaCore()
+
+const { id } = manga.subscribe("test.one", (value, path) => {
+    console.log("subscribe callback:" + path, value)
+}, isMessage = false);
+```
+
+### Object Mode
+
 ```
 const {MangaCore, ListenerClient} = require('manga-js-core')
 manga = new MangaCore()
@@ -125,13 +138,11 @@ For all examples consider this data struture:
 }
 ```
 
+### get
 
-###  get
+params: `path`
 
-params: `path` 
-
-To get values based in `path` 
-
+To get values based in `path`
 
 ### Example:
 
@@ -142,15 +153,16 @@ manga.get("my.data.point").then(value=>{
 })
 
 ```
+
 Result of value:
+
 ```
 {
     "current":43
 }
 ```
 
-
-| If you what to know a length of value without get value you can use `__length` magic property in path, for example `my.data.__length` 
+| If you what to know a length of value without get value you can use `__length` magic property in path, for example `my.data.__length`
 
 ### restricted name of path
 
@@ -165,13 +177,11 @@ using a data example
 `my.data.__length` returns 2
 Becouse data has 2 properties
 
-`my.data.info.name.__length` returns 4 
+`my.data.info.name.__length` returns 4
 Becouse name has length property and the value is 4
 
 `my.data.info.keys.__length` returns 3
 Becouse it is an array with 3 entries
-
-
 
 ## set
 
@@ -185,7 +195,9 @@ manga.set("my.data.points", { last: 12 }).then(res=>{
     console.log("setted data points ", res)
 })
 ```
+
 Return
+
 ```
 {
     "success": true
@@ -215,6 +227,7 @@ manga.reset("my.data.points", { last: 12 }).then(res=>{
 ```
 
 Return
+
 ```
 {
     "success": true
@@ -240,8 +253,7 @@ manga.message("my.data.points", { last: 12 }).then(res=>{
 })
 ```
 
-
-Message do not save data. But if some client was connected by socket.io, they will receive the message sent by this method. 
+Message do not save data. But if some client was connected by socket.io, they will receive the message sent by this method.
 
 | There is no http listener clients. Is not possible to receive messages by http
 
@@ -266,4 +278,3 @@ manga.clear().then(res=>{
     console.log("now all data is empty", res)
 })
 ```
-
