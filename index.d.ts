@@ -46,21 +46,8 @@ export interface Signal<T = any> {
 
   removeAll(): void;
 }
-export interface ListenerHandlerInfo {
-  listener: {
-    property: string;
-    updateMode: "onChange" | "onSet" | "onInterval" | "onChangeLength";
-    frequency: number;
-  };
-  handler: {
-    method: string;
-    filter: {
-      mode: "full" | "changed";
-      data: string;
-    };
-  };
-}
-export class MangaCore {
+
+export declare class MangaCore {
   onClear: Signal;
   middleware: any;
   getInfo(): any;
@@ -128,6 +115,21 @@ export class ListenerClient {
   registerListener(eventName: string, callback: Function): void;
   getListenerInfo(path: string, mode: string, callback: Function): ListenerInfo;
   emit(eventName: string, value: any, callback: Function): void;
+}
+
+export interface ListenerHandlerInfo {
+  listener: {
+    property: string;
+    updateMode: "onChange" | "onSet" | "onInterval" | "onChangeLength";
+    frequency: number;
+  };
+  handler: {
+    method: string;
+    filter: {
+      mode: "full" | "changed";
+      data: string;
+    };
+  };
 }
 
 export interface ListenerInfo {
