@@ -110,7 +110,8 @@ export declare class MangaCore {
   //create method declare to subscribe
   subscribe(
     path: string,
-    callback: Function,
+    //receive function with 2 parameters
+    callback: (data: any, path: string) => void,
     updateMode?: string,
     isMessage?: boolean
   ): { id: string };
