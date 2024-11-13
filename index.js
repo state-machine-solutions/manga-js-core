@@ -41,6 +41,7 @@ function MangaCore() {
         eventDispatcher.dispatchNow();
     });
 
+
     this.clear = () => {
         info.stats.clear++;
         dataController.clear();
@@ -232,9 +233,6 @@ function MangaCore() {
     this.addMessageListener = (ob, listenerClient) => {
         this.addListener(ob, listenerClient, true);
     }
-    /**
-     * ver referencia em algum lugar
-     */
     this.addListener = (ob, listenerClient, isMessage = false) => {
         ob = normalizeListenerObj(ob);
         if (isRestricted(ob, listenerClient)) {
@@ -243,6 +241,38 @@ function MangaCore() {
 
         info.stats.listeners++;
         eventDispatcher.addListener(ob, listenerClient, isMessage);
+    }
+    let subscribes = new Map();
+
+    /**
+     * 
+     * @param {*} path 
+     * @param {*} callback 
+     * @param {*} updateMode 
+     * 
+     * @returns {id: string} id of the listener to unsubscribe
+     */
+    this.subscribe = (path, callback, updateMode = "onChange", isMessage = false) => {
+
+        let client = new ListenerClient()
+        let infoClient = client.getListenerInfo(
+            path,
+            updateMode,
+            (pathInfo, value) => {
+                callback(value)
+            })
+
+        subscribes.set(`${client.id}`, { infoClient, client, isMessage });
+        this.addListener(infoClient, client, isMessage);
+        return { id: `${client.id}` };
+    }
+    this.unsubscribe = (id) => {
+        if (!subscribes.has(id)) {
+            return;
+        }
+        let { infoClient, client, isMessage } = subscribes.get(id);
+        this.removeListener(infoClient, client, isMessage);
+        subscribes.delete(id);
     }
     this.getListeners = () => {
         paused = true;
@@ -291,10 +321,10 @@ function MangaCore() {
         }
 
         var listenerCache = getListenerCacheByClient(listenerClient);
+        eventDispatcher.removeListener(ob, listenerClient, isMessage);
         listenerCache.clear();
         listenersCache.delete(listenerClient);
         info.stats.listeners--;
-        eventDispatcher.removeListener(ob, listenerClient, isMessage);
     }
     this.removeAllListener = (listenerClient) => {
         if (paused) {

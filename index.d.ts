@@ -52,7 +52,7 @@ export declare class MangaCore {
   middleware: any;
   getInfo(): any;
   clear(): void;
-  get(path: string): any;
+  get(path: string): Promise<any>;
   validate(path: string): Promise<any>;
   delete(path: string): Promise<{ success: boolean; message: string }>;
   set(
@@ -107,9 +107,18 @@ export declare class MangaCore {
     isMessage?: boolean
   ): void;
   removeAllListener(listenerIoClient: { id: string }): void;
+  //create method declare to subscribe
+  subscribe(
+    path: string,
+    callback: Function,
+    updateMode?: string,
+    isMessage?: boolean
+  ): { id: string };
+  unsubscribe(id: string): void;
+  //this.subscribe = (path, callback, updateMode = "onChange", isMessage = false) => {
 }
 
-export class ListenerClient {
+export declare class ListenerClient {
   id: number;
   callback: Map<string, Function>;
   registerListener(eventName: string, callback: Function): void;

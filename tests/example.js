@@ -1,43 +1,49 @@
-const {MangaCore, ListenerClient} = require('../index')
+const { MangaCore, ListenerClient } = require('../index')
 const manga = new MangaCore()
 let client1 = new ListenerClient()
 let infoClient1 = client1.getListenerInfo(
-        "test.one", 
-        "onChange", 
-        (method, value)=>{
-            console.log("client1 recive event becouse value test.one was changed", value)
-        })
-manga.addListener(infoClient1, client1, false) 
-
+    "test.one",
+    "onChange",
+    (method, value) => {
+        console.log("client1 recive event becouse value test.one was changed", value)
+    })
+manga.addListener(infoClient1, client1, false)
+const { id } = manga.subscribe("test.one", (value) => {
+    console.log("subscribe callback:", value)
+}, false);
+setTimeout(() => {
+    console.log("unsubscribe ", id)
+    manga.unsubscribe(id)
+}, 10000)
 let client2 = new ListenerClient()
 let infoClient2 = client2.getListenerInfo(
-        "test", 
-        "onChange", 
-        (method, value)=>{
-            console.log("client2 recive event becouse value inside a test was changed", value)
-        })
-manga.addListener(infoClient2, client2, false) 
+    "test",
+    "onChange",
+    (method, value) => {
+        console.log("client2 recive event becouse value inside a test was changed", value)
+    })
+manga.addListener(infoClient2, client2, false)
 
 
 let client3 = new ListenerClient()
 let infoClient3 = client3.getListenerInfo(
-        "test.many", 
-        "onChangeLength", 
-        (method, value)=>{
-            console.log("client3 recive event becouse length of test.many was changed", value)
-            //to recive the list now
-            manga.get("test.many").then((v)=>{console.log("and now client 3 get value of many:", v)})
-        })
-manga.addListener(infoClient3, client3, false) 
+    "test.many",
+    "onChangeLength",
+    (method, value) => {
+        console.log("client3 recive event becouse length of test.many was changed", value)
+        //to recive the list now
+        manga.get("test.many").then((v) => { console.log("and now client 3 get value of many:", v) })
+    })
+manga.addListener(infoClient3, client3, false)
 
 
 Promise.all([
     manga.set("test.one", 1, false),
     manga.set("test.two", 2, false),
-    manga.set("test.many", [1,2,3], false)
-    ]
-) .then(
-    ()=>{
+    manga.set("test.many", [1, 2, 3], false)
+]
+).then(
+    () => {
         manga.get("test").then(console.log)
     }
 )
@@ -45,33 +51,34 @@ Promise.all([
 //messages example
 
 let infoClient1Message = client1.getListenerInfo(
-    "message.chat.room1", 
-    "onMessage", 
-    (method, value)=>{
-        if(value?.from == "client1"){
+    "message.chat.room1",
+    "onMessage",
+    (method, value) => {
+        if (value?.from == "client1") {
             return;
         }
         console.log("client1 recive message:", value)
         //send response after 6 seconds
-        setTimeout(()=>{
-            manga.message("message.chat.room1", {from:"client1", message:"Hi, "+new Date()})
+        setTimeout(() => {
+            manga.message("message.chat.room1", { from: "client1", message: "Hi, " + new Date() })
+            manga.set("test.one", Math.round(Math.random() * 100))
         }, 6000)
     })
-manga.addMessageListener(infoClient1Message, client1, false) 
+manga.addMessageListener(infoClient1Message, client1, false)
 
 let infoClient2Message = client2.getListenerInfo(
-    "message.chat.room1", 
-    "onMessage", 
-    (method, value)=>{
-        if(value?.from == "client2"){
+    "message.chat.room1",
+    "onMessage",
+    (method, value) => {
+        if (value?.from == "client2") {
             return;
         }
         console.log("client2 recive message:", value)
         //send response after 5 seconds
-        setTimeout(()=>{
-            manga.message("message.chat.room1", {from:"client2", message:"Hello, "+new Date()})
+        setTimeout(() => {
+            manga.message("message.chat.room1", { from: "client2", message: "Hello, " + new Date() })
         }, 5000)
     })
-manga.addMessageListener(infoClient2Message, client2, false) 
+manga.addMessageListener(infoClient2Message, client2, false)
 
-manga.message("message.chat.room1", {from:"someone", message:"Welcome, "+new Date()})
+manga.message("message.chat.room1", { from: "someone", message: "Welcome, " + new Date() })
